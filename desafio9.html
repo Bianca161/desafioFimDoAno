@@ -111,7 +111,37 @@ function removerAluno(alunos, frequencia, nome) {
 /* ============================
    6. GERAR RELATÓRIO COMPLETO
 ============================ */
+function gerarRelatorio() {
+  alinharEstruturas();
 
+  const linhas = [];
+  linhas.push("RELATÓRIO DE FREQUÊNCIA");
+  linhas.push("---------------------------------------------------------");
+
+  for (let i = 0; i < alunos.length; i++) {
+    const { presentes, ausentes, percentual } = calcularPercentual(i);
+    const percFmt = `${percentual.toFixed(2)}%`;
+    const classificacao = percentual < 60 ? "RISCO (<60%)" : "OK";
+    linhas.push(
+      `Aluno: ${alunos[i]} | Presentes: ${presentes} | Ausentes: ${ausentes} | Percentual: ${percFmt} | Classificação: ${classificacao}`
+    );
+  }
+
+  linhas.push("---------------------------------------------------------");
+
+  const risco = listarAlunosEmRisco();
+  if (risco.length > 0) {
+    linhas.push("ALUNOS EM RISCO DE REPROVAÇÃO POR FALTA:");
+    risco.forEach(r =>
+      linhas.push(`- ${r.nome}: ${r.percentual.toFixed(2)}%`)
+    );
+  } else {
+    linhas.push("Nenhum aluno com frequência abaixo de 60%.");
+  }
+
+  console.log(linhas.join("\n"));
+  alert("Relatório gerado no console.");
+}
 
 
 
