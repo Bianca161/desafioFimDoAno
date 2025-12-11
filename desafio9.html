@@ -111,36 +111,32 @@ function removerAluno(alunos, frequencia, nome) {
 /* ============================
    6. GERAR RELATÓRIO COMPLETO
 ============================ */
-function gerarRelatorio() {
-  alinharEstruturas();
+let alunos = ["João", "Maria", "Pedro", "Ana", "Carlos", "Beatriz"];
+let frequencia = [
+  ["P","P","F","P","P","P","F","P","P","P","P","F","P","P","P","P","F","P","P","P"], // João
+  ["P","F","F","P","P","F","F","P","P","P","F","F","P","P","P","F","F","P","P","P"], // Maria
+  ["P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P"], // Pedro
+  ["F","F","F","F","P","F","F","F","P","F","F","F","P","F","F","F","P","F","F","F"], // Ana
+  ["P","P","P","P","P","P","P","P","P","P","F","F","P","P","P","P","P","P","P","P"], // Carlos
+  ["P","P","F","P","P","P","F","P","P","P","P","F","P","P","P","P","F","P","P","P"]  // Beatriz
+];
+let totalDias = 20;
 
-  const linhas = [];
-  linhas.push("RELATÓRIO DE FREQUÊNCIA");
-  linhas.push("---------------------------------------------------------");
+for (let i = 0; i < alunos.length; i++) {
+  let presentes = 0;
+  let ausentes = 0;
 
-  for (let i = 0; i < alunos.length; i++) {
-    const { presentes, ausentes, percentual } = calcularPercentual(i);
-    const percFmt = `${percentual.toFixed(2)}%`;
-    const classificacao = percentual < 60 ? "RISCO (<60%)" : "OK";
-    linhas.push(
-      `Aluno: ${alunos[i]} | Presentes: ${presentes} | Ausentes: ${ausentes} | Percentual: ${percFmt} | Classificação: ${classificacao}`
-    );
+  for (let d = 0; d < totalDias; d++) {
+    if (frequencia[i][d] === "P") presentes++;
+    else if (frequencia[i][d] === "F") ausentes++;
   }
 
-  linhas.push("---------------------------------------------------------");
+  let percentual = (presentes / totalDias) * 100;
+  let status = percentual < 60 ? "RISCO (<60%)" : "OK";
 
-  const risco = listarAlunosEmRisco();
-  if (risco.length > 0) {
-    linhas.push("ALUNOS EM RISCO DE REPROVAÇÃO POR FALTA:");
-    risco.forEach(r =>
-      linhas.push(`- ${r.nome}: ${r.percentual.toFixed(2)}%`)
-    );
-  } else {
-    linhas.push("Nenhum aluno com frequência abaixo de 60%.");
-  }
-
-  console.log(linhas.join("\n"));
-  alert("Relatório gerado no console.");
+  console.log(
+    `Aluno: ${alunos[i]} | Presentes: ${presentes} | Ausentes: ${ausentes} | Percentual: ${percentual.toFixed(2)}% | ${status}`
+  );
 }
 
 
