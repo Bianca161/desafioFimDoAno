@@ -1,1 +1,187 @@
-            
+<meta charset="UTF-8">
+
+<script>
+    // ============================
+    // DADOS INICIAIS
+    // ============================
+
+    let alunos = ["João", "Maria", "Pedro", "Ana", "Carlos", "Beatriz"];
+    let frequencia = [[], [], [], [], [], []];
+    let totalDias = 20;
+
+
+    // ============================
+    // 1. VALIDAR ENTRADA (P/F)
+    // ============================
+
+    function validarEntrada(input) {
+        if (!input) input = "";
+        input = input.trim().toUpperCase();
+
+        while (input !== "P" && input !== "F") {
+            input = prompt('Digite "P" para Presente ou "F" para Falta:')
+                .trim()
+                .toUpperCase();
+        }
+
+        return input;
+    }
+
+
+    // ============================
+    // 2. REGISTRAR FREQUÊNCIA
+    // ============================
+
+    function registrarFrequencia() {
+        for (let i = 0; i < alunos.length; i++) {
+            alert(`Registrando frequência de: ${alunos[i]}`);
+
+            for (let dia = 1; dia <= totalDias; dia++) {
+                let entrada = prompt(`Aluno: ${alunos[i]} - Dia ${dia} (P/F):`);
+                let resultado = validarEntrada(entrada);
+                frequencia[i].push(resultado);
+            }
+        }
+    }
+
+
+    // ============================
+    // 3. CALCULAR PERCENTUAIS
+    // ============================
+
+    function calcularPercentuais() {
+        let percentuais = [];
+
+        for (let i = 0; i < frequencia.length; i++) {
+            let presencas = frequencia[i].filter(dia => dia === "P").length;
+            let percentual = (presencas / totalDias) * 100;
+            percentuais.push(percentual);
+        }
+
+        return percentuais;
+    }
+
+
+    // ============================
+    // 4. LISTAR ALUNOS EM RISCO
+    // ============================
+
+    function listarAlunosEmRisco(percentuais) {
+        let risco = [];
+
+        for (let i = 0; i < alunos.length; i++) {
+            if (percentuais[i] < 60) risco.push(alunos[i]);
+        }
+
+        return risco;
+    }
+
+
+    // ============================
+    // 5. ADICIONAR / REMOVER ALUNOS
+    // ============================
+
+    function adicionarAluno() {
+        let nome = prompt("Digite o nome do aluno para adicionar:");
+
+        if (!nome || nome.trim() === "") {
+            alert("Nome inválido!");
+            return;
+        }
+
+        alunos.push(nome.trim());
+        frequencia.push([]);
+
+        alert(`Aluno "${nome}" adicionado com sucesso.`);
+    }
+
+    function removerAluno() {
+        let nome = prompt("Digite o nome do aluno para remover:");
+
+        let indice = alunos.indexOf(nome);
+
+        if (indice !== -1) {
+            alunos.splice(indice, 1);
+            frequencia.splice(indice, 1);
+            alert(`Aluno "${nome}" removido com sucesso.`);
+        } else {
+            alert("Aluno não encontrado!");
+        }
+    }
+
+
+    // ============================
+    // 6. GERAR RELATÓRIO GERAL
+    // ============================
+
+    function gerarRelatorio() {
+        let percentuais = calcularPercentuais();
+        let relatorio = "===== RELATÓRIO GERAL =====\n\n";
+
+        for (let i = 0; i < alunos.length; i++) {
+            let presencas = frequencia[i].filter(dia => dia === "P").length;
+            let faltas = frequencia[i].filter(dia => dia === "F").length;
+            let percentual = percentuais[i];
+            let status = percentual >= 60 ? "APROVADO" : "REPROVADO POR FALTAS";
+
+            relatorio += `Aluno: ${alunos[i]}\n`;
+            relatorio += `Presenças: ${presencas}\n`;
+            relatorio += `Faltas: ${faltas}\n`;
+            relatorio += `Percentual: ${percentual.toFixed(2)}%\n`;
+            relatorio += `Situação: ${status}\n`;
+            relatorio += "-----------------------------------\n\n";
+        }
+
+        alert(relatorio);
+        console.log(relatorio);
+    }
+
+
+    // ============================
+    // MENU DO SISTEMA
+    // ============================
+
+    function menu() {
+        let opcao = "";
+
+        while (opcao !== "5") {
+            opcao = prompt(
+                "===== MENU =====\n" +
+                "1 - Registrar frequência\n" +
+                "2 - Adicionar aluno\n" +
+                "3 - Remover aluno\n" +
+                "4 - Gerar relatório\n" +
+                "5 - Sair\n\n" +
+                "Escolha uma opção:"
+            );
+
+            switch (opcao) {
+                case "1":
+                    registrarFrequencia();
+                    break;
+
+                case "2":
+                    adicionarAluno();
+                    break;
+
+                case "3":
+                    removerAluno();
+                    break;
+
+                case "4":
+                    gerarRelatorio();
+                    break;
+
+                case "5":
+                    alert("Saindo do sistema...");
+                    break;
+
+                default:
+                    alert("Opção inválida!");
+            }
+        }
+    }
+
+    menu();
+
+</script>
