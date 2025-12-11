@@ -1,0 +1,135 @@
+<script>
+
+    /*INFORMAÇÕES INICIAIS*/
+
+    let alunos = ["João", "Maria", "Pedro", "Ana", "Carlos", "Beatriz"];
+    let frequencia = [[], [], [], [], [], []];  // 20 dias para cada aluno
+    let totalDias = 20;
+
+    /*Validar Entrada*/
+
+    function validarEntrada(input) {
+
+        input = input.trim().toUpperCase();
+
+        while (input !== "P" && input !== "F") {
+            input = prompt(`Informe se o aluno está presente "P" ou faltou "F" `).trim().toUpperCase();
+        }
+        return input;
+    }
+
+    /* REGISTRA FREQUÊNCIA*/
+
+    function registrarFrequencia(alunos, frequencia, totalDias) {
+
+        //percore cada aluno//
+
+        for (let i = 1; i < alunos.length; i++) {
+
+            for (let dia = 1; dia <= totalDias; dia++) {
+                let entrada = prompt(`Aluno: ${alunos[i]} - Dia ${dia}: Informe "P" ou "F"`);
+
+                let resultado = validarEntrada(entrada);
+                frequencia[i].push(resultado);
+            }
+
+        }
+
+    }
+
+
+    function calcularPercentuais(frequencia, totalDias) {
+        let percentuais = [];
+
+        for (let i = 0; i < frequencia.length; i++) {
+            let presencas = 0;
+        }
+    }
+
+    /*CALCULAR ALUNOS PRESENTES*/alunos
+    for (let j = 0; j < frequencia[i].length; j++) {
+
+        if (frequencia[i][j] === "P") {
+            presencas++
+
+        }
+
+    }
+
+    /*Calcular percentual*/
+    let percentual1 = (presencas / totalDias) * 100;
+    percentuais.push(percentual1);
+
+    /*ALUNOS EM RISCO*/
+    function listarAlunosEmRisco(alunos, percentuais) {
+        let risco = [];
+
+        for (let i = 0; i < alunos.length; i++) {
+            if (percentuais[i], 60) {
+                risco.push(alunos[i]);
+            }
+
+        }
+
+        risco.push(aluno);
+    }
+
+    /*ADICIONAR ALUNOS*/
+    function adicionarAlunos(frequencia, nome, totalDias) {
+        alunos.push(nome);
+        frequencia.push([]);
+    }
+
+    /*REMOVER O ALUNO*/
+    function removerAluno(alunos, frequencia, nome) {
+        let i = alunos.indexof(nome);
+
+        if (i !== -1) {
+            alunos.splice(i, 1);
+            frequencia.splice(i, 1);
+
+        } else {
+            alert(`Aluno não encontrado`);
+
+        }
+    }
+
+    /*GERAR RELATORIO*/
+    function gerarRelatorio(alunos, frequencia, totalDias) {
+let percentuais = calcularPercentuais(frequencia, totalDias);
+
+for (let i = 0; i < alunos.length; i++) {
+    let presencas = 0;
+    
+}
+    }
+
+    /*CONTAR A PRESENÇA*/
+
+    for (let j = 0; j < frequencia[i].length; j++) {
+        if (frequencia[i][j]  === "P") {
+            presencas++;
+            
+        }
+        
+    }
+
+    let faltas = totalDias - presencas;
+    let percentual = percentuais[i];
+    let situacao = percentual < 60 ? "RISCO" : "OK";
+
+
+    console.log(`Alunos: ${alunos[i]} /n
+    presenças: ${presencas} /n
+    faltas: ${faltas} /n
+    percentual: ${percentual.toFixed(2)}% /n
+    situaçaõ: ${situacao}`);
+</script>
+
+
+
+
+       
+
+       
+
